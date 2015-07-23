@@ -1,4 +1,4 @@
-Blog
+Blog of Nikolay Nikolov
 ====
 
-Blog Pessoal.
+Credit: Theme adopted from https://github.com/ronchifabricio/Blog.

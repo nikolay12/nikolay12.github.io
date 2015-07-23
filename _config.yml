@@ -1,12 +1,11 @@
-name: Fabrício Ronchi - Blog
+name: Nikolay Nikolov
 markdown: redcarpet
 pygments: true
-name: Fabrício Ronchi
-url: http://fabricioronchi.com
-domain: fabricioronchi.com
+name: Nikolay Nikolov
+url: http://nikolov.me.uk
+domain: nikolov.me.uk
 author :
-  name : Fabrício Ronchi
-  email : fabricioronchii@gmail.com
-  github : https://github.com/realronchi
-  twitter : https://twitter.com/realronchi
-  linkedin : http://br.linkedin.com/in/realronchi
+  name : Nikolay Nikolov
+  email : nikolay12@gmail.com
+  twitter : https://twitter.com/NickNikolov2
+  linkedin : https://uk.linkedin.com/pub/nikolay-nikolov/8a/261/758
