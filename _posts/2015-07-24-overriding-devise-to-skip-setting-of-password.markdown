@@ -1,0 +1,69 @@
+---
+layout: post
+title:  "Overriding Devise to Skip Setting of Password (Rails4, Devise3)"
+date:   2015-07-24 21:00:00
+categories: Blog
+---
+
+I've been thinking about a light-touch workflow which allows a prospective user to register without setting a password. My first idea was to override the confirmable module (i.e. to invite the user to set a password as part of the confirmation) but I dropped it as it introduces an interim state (an unconfirmed account) and for me this is an unnecessary complication. My idea was to make the registration <i>simpler</i> and requiring a confirmation would be the exact opposite.
+
+Thus I decided to override the default registration workflow so that Devise sets a password which is sent to the user. The user may decide than to change it or not - it would be the usual case of password management. There is a slight imperfection - the password is communicated in plain text. I know that this is not kosher but I decided I'd take this imperfection as I really want to achieve a light-touch registration interaction.
+
+This lengthy blog post is, essentially, a tutorial how to do it - I've written it up as I couldn't find an exact recipe so had to go through an try-and-error process till I got it working.
+
+<h2>1. Starting with a default Devise example</h2>
+
+
+So let's start first with a relatively simple yet self-contained code example - Daniel Kehoe's [excellent Devise tutorial](https://github.com/RailsApps/rails-devise). I forked it [here](https://github.com/nikolay12/my_devise/commit/74a92e4ce4934f3e06a753c2d93e2127930192d0) and simplified it a bit. The example uses [Mandrill](www.mandrill.com) to handle the emails so you would need to register - a free account gives you a generous quota of 12K emails per month.
+
+Let's clone that commit. This is done by
+
+`git clone https://github.com/nikolay12/my_devise`
+
+followed by
+
+`git reset --soft 74a92e4ce4934f3e06a753c2d93e2127930192d0`
+
+You need than to run 
+
+`bundle install`
+
+The example uses the [econfig gem](https://github.com/elabs/econfig) to load the environment variables and database credentials. I'm storing these in secrets.yml (you just need to enter your values)
+
+```
+development:
+  MANDRILL_USERNAME: ""
+  MANDRILL_API_KEY: ""
+  MANDRILL_DOMAIN: ""
+  RETURN_EMAIL: ""
+  DEVISE_SECRET: ""
+  secret_key_base: ""
+```
+
+and database.yml:
+
+```
+development:
+  adapter: postgresql
+  encoding: utf8
+  database: my_devise
+  pool: 5
+  username: 
+  password: 
+  host: 127.0.0.1
+  port: 5432
+```
+
+The example uses postgres but you could use any other DB (in fact, the mysql gem is included in the Gemfile, too). Once the DB credentials are set you need to run
+
+`rake db:setup`
+
+If you've done everything correctly running
+
+`rails server`
+
+should give you
+
+<img src="/img/posts/devise_start.jpg" />
+
+
